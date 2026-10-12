@@ -73,6 +73,20 @@ Error messages from the backend arrive in English; the common ones are translate
 The look follows Material Design 3 (tonal colors, rounded buttons and cards, outlined text fields, segmented buttons, filter chips, snackbar, Roboto from Google Fonts with a system fallback). There is a light theme (white, yellow fills, black text and outlines) and a dark theme (black, white text, yellow accents). The first visit follows the system setting; the sun/moon
 button in the header switches and remembers the choice. The colors are variables at the top of `styles.css`.
 
+## Backend on the same machine, not open to the internet (for example on EC2)
+
+`server.js` forwards every `/api/` request to the backend (default `http://127.0.0.1:8080`, change it with
+`API_PROXY=http://host:port`). To use it:
+
+1. Start the backend so it only listens on its own machine: `SERVER_ADDRESS=127.0.0.1 mvn spring-boot:run`
+2. In `config.js` add the line `window.FOUNDRY_API_BASE = window.location.origin;`
+3. Start the UI with `npm start` (keep it running, for example `nohup npm start > ui.log 2>&1 &`) and open
+   `http://<machine address>:5173`.
+
+The browser now only talks to the UI server on port 5173, which calls the backend on localhost for it. Only port 5173
+(plus 22 for SSH) needs to be open to the world, and the backend needs no CORS setting. If the backend is stopped the page
+says so.
+
 ## Changing addresses
 
 * **Backend address.** By default the UI calls port 8080 on the same host name as the page

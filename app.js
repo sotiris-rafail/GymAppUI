@@ -47,6 +47,9 @@ async function api(method,path,body){
     if(data&&data.message)err.message=I18N.server(data.message);
     throw err;
   }
+  if(data===null&&res.status!==204&&txt){
+    throw new Error('The address '+API_BASE+path+' did not answer with API data (got '+(res.headers.get('content-type')||'unknown type')+'). /api must be forwarded to the backend: check that server.js is the new version and restarted, and that the backend is running.');
+  }
   return data;
 }
 function normPlan(p){return {id:p.id,name:p.name,price:Number(p.price),visits:p.visitsPerMonth};}
@@ -56,8 +59,8 @@ function classBody(c){return {name:c.name,coach:c.coach,startTime:c.time,duratio
 
 async function loadCatalog(){
   var r=await Promise.all([api('GET','/api/plans'),api('GET','/api/classes')]);
-  state.plans=r[0].map(normPlan);
-  state.classes=r[1].map(normClass);
+  state.plans=(r[0]||[]).map(normPlan);
+  state.classes=(r[1]||[]).map(normClass);
   base.plans=clone(state.plans);base.classes=clone(state.classes);
 }
 async function loadSessions(){
