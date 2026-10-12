@@ -1,0 +1,35 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Foundry Gym Calendar</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500&display=swap" rel="stylesheet">
+<script>try{var th=localStorage.getItem("foundry.theme");if(th==="light"||th==="dark")document.documentElement.setAttribute("data-theme",th);}catch(e){}</script>
+<link rel="stylesheet" href="styles.css">
+</head>
+<body>
+<div class="wrap"><div id="app"><p style="padding-top:28px;font:15px system-ui,sans-serif;color:#59656C">Loading the gym calendar...</p></div></div>
+<noscript><p style="padding:16px;font:15px system-ui,sans-serif">This page needs JavaScript turned on.</p></noscript>
+<div class="toast-wrap"><div id="toast" class="toast" role="status" aria-live="polite" hidden></div></div>
+<script>
+/* If something stops the page from starting, say what, instead of staying blank. */
+window.addEventListener('error', function (e) {
+  var app = document.getElementById('app');
+  if (!app || app.textContent.indexOf('Loading the gym calendar') === -1) return;
+  var t = e.target;
+  if (t && t !== window && t.tagName !== 'SCRIPT') return; /* a missing font or image is not fatal */
+  var what = (t && t !== window) ? 'Could not load ' + t.src : (e.message || 'Unknown script error');
+  var p = document.createElement('p');
+  p.style.cssText = 'padding-top:28px;font:15px system-ui,sans-serif;color:#B3261E';
+  p.textContent = 'The page could not start. ' + what + '. Open the browser console for details.';
+  app.replaceChildren(p);
+}, true);
+</script>
+<script src="config.js"></script>
+<script src="i18n.js"></script>
+<script src="app.js"></script>
+</body>
+</html>

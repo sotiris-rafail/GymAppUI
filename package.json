@@ -1,0 +1,13 @@
+{
+  "name": "foundry-gym-ui",
+  "version": "0.1.0",
+  "private": true,
+  "description": "Browser UI for the Foundry gym calendar. Talks to the Spring Boot backend over HTTP.",
+  "scripts": {
+    "start": "node server.js",
+    "dev": "node server.js"
+  },
+  "engines": {
+    "node": ">=18"
+  }
+}
